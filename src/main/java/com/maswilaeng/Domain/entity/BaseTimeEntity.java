@@ -14,25 +14,12 @@ import java.time.format.DateTimeFormatter;
 @EntityListeners({AuditingEntityListener.class})
 abstract class BaseTimeEntity {
 
-    @Column(name = "created_date", nullable = false)
+    @Column(nullable = false)
     @CreatedDate
-    private String createdDate;
+    private LocalDateTime createdAt;
 
-    @Column(name = "modified_date", nullable = false)
+    @Column(nullable = false)
     @LastModifiedDate
-    private String modifiedDate;
-
-    /* 해당 엔티티를 저장하기 이전에 실행 */
-    @PrePersist
-    public void onPrePersist(){
-        this.createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
-        this.modifiedDate = this.createdDate;
-    }
-
-    /* 해당 엔티티를 업데이트 하기 이전에 실행*/
-    @PreUpdate
-    public void onPreUpdate(){
-        this.modifiedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
-    }
+    private LocalDateTime modifiedAt;
 
 }

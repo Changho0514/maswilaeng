@@ -22,7 +22,7 @@ public class UserResponseDto {
     private String email;
     private String pw;
     private String nickName;
-    private Long phoneNumber;
+    private String phoneNumber;
     private String userImage;
     private String introduction;
     private String withdraw_yn;

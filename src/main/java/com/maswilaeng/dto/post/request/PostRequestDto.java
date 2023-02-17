@@ -23,8 +23,9 @@ public class PostRequestDto {
     private LocalDateTime modified_at;
 
     /* Dto -> Entity */
-    public Post toEntity() {
+    public Post toEntity(User user) {
         Post posts = Post.builder()
+                .user(user)
                 .id(post_id)
                 .created_at(created_at)
                 .thumbnail(thumbnail)
