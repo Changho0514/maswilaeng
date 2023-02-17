@@ -2,23 +2,24 @@ package com.maswilaeng.service;
 
 import com.maswilaeng.Domain.entity.User;
 import com.maswilaeng.Domain.repository.UserRepository;
+import com.maswilaeng.dto.user.request.UserUpdateRequestDto;
+import com.maswilaeng.dto.user.response.UserInfoResponseDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
+    @Transactional
     public Long join(User user){
         // 같은 닉네임의 중복 회원 X
         User result = userRepository.findByNickName(user.getNickName());
@@ -32,10 +33,9 @@ public class UserService {
     }
 
 
+
     public List<User> findUsers(){
-        /**
-         * 전체 회원 조회
-         */
+
         return userRepository.findAll();
     }
 
@@ -46,5 +46,24 @@ public class UserService {
 
     public void deleteByUserId(Long id) {
         userRepository.deleteById(id);
+    }
+
+
+
+
+    public UserInfoResponseDto getUser(Long userId){
+        User user = userRepository.findById(userId).get();
+        return UserInfoResponseDto.of(user);
+    }
+
+    public void updateUser(Long userId, UserUpdateRequestDto requestDto) {
+        User selectedUser = userRepository.findById(userId).get();
+
+        selectedUser.update(requestDto); //더티체킹
+    }
+    public void userWithdraw(Long userId) {
+        User user = userRepository.findById(userId).get();
+        user.withdraw();
+
     }
 }

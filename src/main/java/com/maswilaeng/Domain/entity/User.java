@@ -1,33 +1,36 @@
 package com.maswilaeng.Domain.entity;
 
+import com.maswilaeng.dto.user.request.UserUpdateDto;
+import com.maswilaeng.dto.user.request.UserUpdateRequestDto;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+
+@Table(name = "users")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
 @Entity
-public class User{
+public class User extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "user_id")
     private Long id;
 
-    @Column(nullable = false, length = 50, unique = true)
+    @Column(nullable = false, length = 30, unique = true)
     private String email;
 
     @Column(nullable = false, length = 100)
     private String pw;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, length = 30, unique = true)
     private String nickName;
 
     @Column(nullable = false, length = 100)
@@ -47,7 +50,7 @@ public class User{
     private Role role;
 
     // 수정 필요
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 1000)
     private String refresh_token;
 
     @Column(nullable = false, length = 100)
@@ -56,12 +59,42 @@ public class User{
 
     @Column
     @LastModifiedDate
-    private LocalDateTime  modified_at;
+    private LocalDateTime  modifiedAt;
+
+    @ColumnDefault("0")
+    private int withdrawYn;
 
     @Column
-    private LocalDateTime withdraw_at;
+    private LocalDateTime withdrawAt;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post_id")
-    private List<Post> post;
+    @Builder
+    public User(String email, String pw, String nickName, String phoneNumber,
+                String userImage, String introduction, String withdraw_yn, Role role) {
+        this.email = email;
+        this.pw = pw;
+        this.nickName = nickName;
+        this.phoneNumber = phoneNumber;
+        this.userImage = userImage;
+        this.introduction = introduction;
+        this.withdraw_yn = withdraw_yn;
+        this.role = role;
+    }
+
+    public void update(UserUpdateRequestDto userUpdateRequestDto) {
+
+        this.pw = userUpdateRequestDto.getPw();
+        this.phoneNumber = userUpdateRequestDto.getPhoneNumber();
+        this.nickName = userUpdateRequestDto.getNickName();
+        this.userImage = userUpdateRequestDto.getUserImage();
+        this.introduction = userUpdateRequestDto.getIntroduction();
+    }
+
+    public void withdraw() {
+        this.withdrawYn = 1;
+        this.withdrawAt = LocalDateTime.now();
+    }
+    // 질문: 필요없는 부분일까요?
+//    @OneToMany(mappedBy = "post_id")
+//    private List<Post> post  = new ArrayList<>();
 
 }

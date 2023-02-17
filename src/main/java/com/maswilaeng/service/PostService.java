@@ -5,15 +5,19 @@ import com.maswilaeng.Domain.entity.User;
 import com.maswilaeng.Domain.repository.PostRepository;
 import com.maswilaeng.Domain.repository.UserRepository;
 import com.maswilaeng.dto.post.request.PostRequestDto;
+import com.maswilaeng.dto.post.request.PostUpdateDto;
+import com.maswilaeng.dto.post.response.PostListResponseDto;
 import com.maswilaeng.dto.post.response.PostResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,44 +29,54 @@ public class PostService {
 
     /* CREATE */
     @Transactional
-    public Long save(PostRequestDto dto, String nickName) {
+    public void save(Long userId, PostRequestDto PostRequestDto) {
 
         /* User 정보를 가져와 dto에 담아준다. */
-        User user = userRepository.findByNickName(nickName);
-        dto.setUser_id(user.getId());
-        Post post = dto.toEntity();
-        postRepository.save(post);
-
-        return post.getId();
+        User user = userRepository.findById(userId).get();
+        postRepository.save(PostRequestDto.toEntity(user));
     }
 
     /* READ 게시글 리스트 조회 */
     @Transactional(readOnly = true)
-    public List<PostResponseDto> findPostById(Long id) {
-        List<Post> post = postRepository.findByPostId(id).orElseThrow(() ->
-                new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id: " + id));
-
-        return new PostResponseDto(post.stream().));
+    public Post findPostById(Long postId) {
+        return postRepository.findByPostId(postId).orElseThrow(() ->
+                new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id: " + postId));
     }
 
     /*
      * UPDATE -> dirty checking 으로 하는지?
      */
     @Transactional
-    public void update(Long id, PostRequestDto dto) { // id 없는 객체 -> null "mergeX"
-        Post post = postRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));
+    public void updatePost(Long userId, PostUpdateDto updateDto) throws Exception { // id 없는 객체 -> null "mergeX"
 
-        post.update(dto.getTitle(), dto.getContent());
+        Post toUpdatePost = postRepository.findById(updateDto.getPostId()).get();
+
+        if (Objects.equals(toUpdatePost.getUser().getId(), userId)) {
+            toUpdatePost.update(updateDto);
+        } else{
+            throw new Exception("해당 게시물 접근 권한 없음");
+        }
+
     }
 
     /* DELETE */
     @Transactional
     public void delete(Long id) {
-        Post posts = postRepository.findById(id).orElseThrow(() ->
+        Post post = postRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));
 
-        postRepository.delete(posts);
+        postRepository.delete(post);
+    }
+
+    public Page<Post> getUserPostList(Long userId, int currentPage) {
+        return postRepository.findByUserId(userId, PageRequest.of(
+                currentPage - 1, 20, Sort.Direction.DESC, "createdAt"));
+    }
+
+
+    public List<PostListResponseDto> getPostListDefault() {
+        return postRepository.findAllFetchJoin(PageRequest.of(0,500));
+
     }
 //
 //    /* search */
