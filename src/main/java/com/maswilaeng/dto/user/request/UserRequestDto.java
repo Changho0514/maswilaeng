@@ -1,7 +1,7 @@
 package com.maswilaeng.dto.user.request;
 
-import com.maswilaeng.Domain.entity.Role;
-import com.maswilaeng.Domain.entity.User;
+import com.maswilaeng.domain.entity.Role;
+import com.maswilaeng.domain.entity.User;
 
 import java.time.LocalDateTime;
 

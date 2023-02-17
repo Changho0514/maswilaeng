@@ -1,15 +1,12 @@
 package com.maswilaeng.dto.user.response;
 
-import com.maswilaeng.Domain.entity.Role;
-import com.maswilaeng.Domain.entity.User;
+import com.maswilaeng.domain.entity.Role;
+import com.maswilaeng.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @Data

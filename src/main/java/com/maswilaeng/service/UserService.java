@@ -1,11 +1,10 @@
 package com.maswilaeng.service;
 
-import com.maswilaeng.Domain.entity.User;
-import com.maswilaeng.Domain.repository.UserRepository;
+import com.maswilaeng.domain.entity.User;
+import com.maswilaeng.domain.repository.UserRepository;
 import com.maswilaeng.dto.user.request.UserUpdateRequestDto;
 import com.maswilaeng.dto.user.response.UserInfoResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

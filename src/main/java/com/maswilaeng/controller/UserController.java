@@ -1,18 +1,13 @@
 package com.maswilaeng.controller;
 
-import com.maswilaeng.Domain.entity.Role;
-import com.maswilaeng.Domain.entity.User;
 import com.maswilaeng.dto.user.request.UserUpdateRequestDto;
 import com.maswilaeng.service.UserService;
 import com.maswilaeng.utils.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController

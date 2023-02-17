@@ -1,7 +1,7 @@
-package com.maswilaeng.Domain.repository;
+package com.maswilaeng.domain.repository;
 
-import com.maswilaeng.Domain.entity.Post;
-import com.maswilaeng.Domain.entity.User;
+import com.maswilaeng.domain.entity.Post;
+import com.maswilaeng.domain.entity.User;
 import com.maswilaeng.dto.post.response.PostListResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -1,6 +1,6 @@
 package com.maswilaeng.dto.user;
 
-import com.maswilaeng.Domain.entity.User;
+import com.maswilaeng.domain.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

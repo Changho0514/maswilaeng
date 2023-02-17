@@ -1,25 +1,16 @@
 package com.maswilaeng.controller;
 
-import com.maswilaeng.Domain.entity.Post;
-import com.maswilaeng.Domain.repository.PostRepository;
+import com.maswilaeng.domain.entity.Post;
+import com.maswilaeng.domain.repository.PostRepository;
 import com.maswilaeng.dto.common.ResponseDto;
 import com.maswilaeng.dto.post.request.PostRequestDto;
 import com.maswilaeng.dto.post.request.PostUpdateDto;
 import com.maswilaeng.dto.post.response.PostResponseDto;
-import com.maswilaeng.dto.user.request.UserRequestDto;
-import com.maswilaeng.dto.user.response.UserResponseDto;
 import com.maswilaeng.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController

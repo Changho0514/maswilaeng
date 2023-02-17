@@ -1,4 +1,4 @@
-package com.maswilaeng.Domain.entity;
+package com.maswilaeng.domain.entity;
 
 import com.maswilaeng.dto.post.request.PostUpdateDto;
 import lombok.*;

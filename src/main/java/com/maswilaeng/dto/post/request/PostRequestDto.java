@@ -1,7 +1,7 @@
 package com.maswilaeng.dto.post.request;
 
-import com.maswilaeng.Domain.entity.Post;
-import com.maswilaeng.Domain.entity.User;
+import com.maswilaeng.domain.entity.Post;
+import com.maswilaeng.domain.entity.User;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,5 @@
-package com.maswilaeng.Domain.entity;
+package com.maswilaeng.domain.entity;
 
-import com.maswilaeng.dto.user.request.UserUpdateDto;
 import com.maswilaeng.dto.user.request.UserUpdateRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -9,8 +8,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Table(name = "users")

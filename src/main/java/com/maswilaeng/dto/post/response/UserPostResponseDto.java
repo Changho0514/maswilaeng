@@ -1,6 +1,6 @@
 package com.maswilaeng.dto.post.response;
 
-import com.maswilaeng.Domain.entity.Post;
+import com.maswilaeng.domain.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

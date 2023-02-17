@@ -1,8 +1,7 @@
 package com.maswilaeng.dto.post.response;
 
-import com.maswilaeng.Domain.entity.Post;
+import com.maswilaeng.domain.entity.Post;
 import lombok.Getter;
-import org.apache.coyote.Response;
 
 import java.time.LocalDateTime;
 
