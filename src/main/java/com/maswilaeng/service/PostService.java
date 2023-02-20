@@ -6,7 +6,6 @@ import com.maswilaeng.domain.repository.PostRepository;
 import com.maswilaeng.domain.repository.UserRepository;
 import com.maswilaeng.dto.post.request.PostRequestDto;
 import com.maswilaeng.dto.post.request.PostUpdateDto;
-import com.maswilaeng.dto.post.response.PostListResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -38,7 +36,7 @@ public class PostService {
     /* READ 게시글 리스트 조회 */
     @Transactional(readOnly = true)
     public Post findPostById(Long postId) {
-        return postRepository.findByPostId(postId).orElseThrow(() ->
+        return postRepository.findById(postId).orElseThrow(() ->
                 new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id: " + postId));
     }
 
@@ -48,7 +46,7 @@ public class PostService {
     @Transactional
     public void updatePost(Long userId, PostUpdateDto updateDto) throws Exception { // id 없는 객체 -> null "mergeX"
 
-        Post toUpdatePost = postRepository.findById(updateDto.getPostId()).get();
+        Post toUpdatePost = postRepository.findById(updateDto.getId()).get();
 
         if (Objects.equals(toUpdatePost.getUser().getId(), userId)) {
             toUpdatePost.update(updateDto);
@@ -72,11 +70,11 @@ public class PostService {
                 currentPage - 1, 20, Sort.Direction.DESC, "createdAt"));
     }
 
-
-    public List<PostListResponseDto> getPostListDefault() {
-        return postRepository.findAllFetchJoin(PageRequest.of(0,500));
-
-    }
+//
+//    public List<PostListResponseDto> getPostListDefault() {
+//        return postRepository.findAllFetchJoin(PageRequest.of(0,500));
+//
+//    }
 //
 //    /* search */
 //    @Transactional(readOnly = true)

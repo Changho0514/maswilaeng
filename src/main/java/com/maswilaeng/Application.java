@@ -2,8 +2,10 @@ package com.maswilaeng;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@SpringBootApplication
+@EnableJpaAuditing
+@SpringBootApplication(scanBasePackages = {"opg.springframework.security.config"})
 public class Application {
 
 	public static void main(String[] args) {

@@ -15,10 +15,10 @@ public class UserForm {
     private Long phoneNumber;
     private String userImage;
     private String introduction;
-    private String withdraw_yn;
+    private String withdrawYn;
     private Role role;
-    private String refresh_token;
-    private LocalDateTime created_at = LocalDateTime.now();
-    private LocalDateTime modified_at;
-    private LocalDateTime withdraw_at;
+    private String refreshToken;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime modifiedAt;
+    private LocalDateTime withdrawAt;
 }

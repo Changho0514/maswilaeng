@@ -15,39 +15,43 @@ import java.time.LocalDateTime;
 @Builder
 public class UserResponseDto {
 
-    private String user_id;
+    private Long user_id;
     private String email;
     private String pw;
     private String nickName;
     private String phoneNumber;
     private String userImage;
     private String introduction;
-    private String withdraw_yn;
+    private int withdrawYn;
     private Role role;
-    private String refresh_token;
-    private LocalDateTime created_at;
-    private LocalDateTime modified_at;
-    private LocalDateTime withdraw_at;
+    private String refreshToken;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
+    private LocalDateTime withdrawAt;
 
     /* DTO -> Entity */
     public UserResponseDto(User user) {
         //for git
-        this.user_id = user_id;
-        this.email = email;
+        this.user_id = user.getId();
         this.email = user.getEmail();
         this.pw = user.getPw();
         this.nickName = user.getNickName();
         this.phoneNumber = user.getPhoneNumber();
         this.userImage = user.getUserImage();
         this.introduction = user.getIntroduction();
-        this.withdraw_yn = user.getWithdraw_yn();
+        this.withdrawYn = user.getWithdrawYn();
         this.role = user.getRole();
-        this.refresh_token = user.getRefresh_token();
-
-
-
-
-
+        this.refreshToken = user.getRefreshToken();
 
     }
+
+    public UserResponseDto(String email) {
+        this.email = email;
+    }
+
+    public static UserResponseDto of(User user) {
+
+        return new UserResponseDto(user.getEmail());
+    }
+
 }

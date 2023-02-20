@@ -9,20 +9,20 @@ import java.time.LocalDateTime;
 @Getter
 public class PostResponseDto {
     private Long post_id;
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
     private String thumbnail;
     private String title;
     private String content;
-    private LocalDateTime modified_at;
+    private LocalDateTime modifiedAt;
 
 
     /* Dto -> Entity */
     public PostResponseDto(Post post) {
         this.post_id = post.getId();
-        this.created_at = post.getCreated_at();
+        this.createdAt = post.getCreatedAt();
         this.thumbnail = post.getThumbnail();
         this.title = post.getTitle();
         this.content = post.getContent();
-        this.modified_at = post.getModified_at();
+        this.modifiedAt = post.getModifiedAt();
     }
 }

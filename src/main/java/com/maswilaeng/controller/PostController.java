@@ -44,7 +44,7 @@ public class PostController {
     // updateMapping 이었는지 put이었는지 기억이 안남.
     @PutMapping("/post/{postId}")
     public ResponseEntity<?> updatePost(@PathVariable  @RequestBody PostUpdateDto postUpdateDto) throws Exception {
-        postService.updatePost(postRepository.findUserIdByPostId(postUpdateDto.getPostId()),postUpdateDto);
+        postService.updatePost(postRepository.findUserIdById(postUpdateDto.getId()),postUpdateDto);
         return ResponseEntity.ok().body(ResponseDto.of(HttpStatus.OK));
     }
 

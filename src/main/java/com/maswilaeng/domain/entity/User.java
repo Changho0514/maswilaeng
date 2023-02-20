@@ -1,7 +1,10 @@
 package com.maswilaeng.domain.entity;
 
 import com.maswilaeng.dto.user.request.UserUpdateRequestDto;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -39,20 +42,17 @@ public class User extends BaseTimeEntity{
     @Column
     private String introduction;
 
-    @Column(nullable = false, length = 100)
-    private String withdraw_yn;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 100)
     private Role role;
 
     // 수정 필요
     @Column(nullable = false, length = 1000)
-    private String refresh_token;
+    private String refreshToken;
 
     @Column(nullable = false, length = 100)
     @CreatedDate
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @Column
     @LastModifiedDate
@@ -65,17 +65,27 @@ public class User extends BaseTimeEntity{
     private LocalDateTime withdrawAt;
 
     @Builder
-    public User(String email, String pw, String nickName, String phoneNumber,
-                String userImage, String introduction, String withdraw_yn, Role role) {
+    public User(String email, String pw, String nickName, String phoneNumber, String refreshToken,
+                LocalDateTime createdAt,
+                String userImage, String introduction, int withdrawYn, Role role) {
         this.email = email;
         this.pw = pw;
         this.nickName = nickName;
         this.phoneNumber = phoneNumber;
         this.userImage = userImage;
         this.introduction = introduction;
-        this.withdraw_yn = withdraw_yn;
+        this.createdAt = createdAt;
+        this.withdrawYn = withdrawYn;
         this.role = role;
     }
+
+    @Builder
+    public User(String email, String pw, Role role) {
+        this.email = email;
+        this.pw = pw;
+        this.role = role;
+    }
+
 
     public void update(UserUpdateRequestDto userUpdateRequestDto) {
 

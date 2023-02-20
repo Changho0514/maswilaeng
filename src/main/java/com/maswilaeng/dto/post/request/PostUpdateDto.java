@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostUpdateDto {
 
-    private Long postId;
+    private Long Id;
 
     private String thumbnail;
 

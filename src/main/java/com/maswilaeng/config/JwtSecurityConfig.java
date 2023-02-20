@@ -1,20 +1,23 @@
 package com.maswilaeng.config;
 
-import com.maswilaeng.jwt.jwtTokenProvider;
+import com.maswilaeng.jwt.JwtFilter;
+import com.maswilaeng.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+// 직접 만든 TokenProvider와 JwtFilter를 SecurityConfig에 적용할 때 사용
 @RequiredArgsConstructor
 public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-    private final jwtTokenProvider JwtTokenProvider;
+    private final TokenProvider TokenProvider;
 
+    //TokenProvider 를 주입 받아 JwtFilter를 통해 Security 로직에 필터를 등록
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        JwtFilter customFilter = new JwtFilter(JwtTokenProvider);
+        JwtFilter customFilter = new JwtFilter(TokenProvider);
         http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

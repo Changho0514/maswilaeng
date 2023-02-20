@@ -16,35 +16,35 @@ public class PostRequestDto {
 
     private Long post_id;
     private Long user_id;
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
     private String thumbnail;
     private String title;
     private String content;
-    private LocalDateTime modified_at;
+    private LocalDateTime modifiedAt;
 
     /* Dto -> Entity */
     public Post toEntity(User user) {
         Post posts = Post.builder()
                 .user(user)
                 .id(post_id)
-                .created_at(created_at)
+                .createdAt(createdAt)
                 .thumbnail(thumbnail)
                 .title(title)
                 .content(content)
-                .modified_at(modified_at)
+                .modifiedAt(modifiedAt)
                 .build();
 
         return posts;
     }
 
     @Builder
-    public PostRequestDto(Long post_id, Long user_id, LocalDateTime created_at, String thumbnail, String title, String content, LocalDateTime modified_at) {
+    public PostRequestDto(Long post_id, Long user_id, LocalDateTime createdAt, String thumbnail, String title, String content, LocalDateTime modifiedAt) {
         this.post_id = post_id;
         this.user_id = user_id;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
         this.thumbnail = thumbnail;
         this.title = title;
         this.content = content;
-        this.modified_at = modified_at;
+        this.modifiedAt = modifiedAt;
     }
 }
