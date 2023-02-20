@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.maswilaeng.domain.entity.Role.USER;
-
 @Getter
 @NoArgsConstructor
 public class UserJoinDto {
@@ -18,6 +16,13 @@ public class UserJoinDto {
     private String nickName;
 
     private String userImage;
+
+    public UserJoinDto(String email, String pw, String nickName, String userImage) {
+        this.email = email;
+        this.pw = pw;
+        this.nickName = nickName;
+        this.userImage = userImage;
+    }
 
     public User toEntity() {
         return User.builder()
@@ -32,7 +37,8 @@ public class UserJoinDto {
         return User.builder()
                 .email(email)
                 .pw(passwordEncoder.encode(pw))
-                .role(USER)
+                .nickName(nickName)
+                .userImage(userImage)
                 .build();
     }
 }

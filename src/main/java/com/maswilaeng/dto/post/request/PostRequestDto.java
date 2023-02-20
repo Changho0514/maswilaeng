@@ -26,12 +26,9 @@ public class PostRequestDto {
     public Post toEntity(User user) {
         Post posts = Post.builder()
                 .user(user)
-                .id(post_id)
-                .createdAt(createdAt)
                 .thumbnail(thumbnail)
                 .title(title)
                 .content(content)
-                .modifiedAt(modifiedAt)
                 .build();
 
         return posts;

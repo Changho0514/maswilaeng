@@ -4,7 +4,6 @@ import com.maswilaeng.jwt.dto.TokenDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +22,6 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
@@ -32,7 +30,7 @@ public class TokenProvider {
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7; // 7일
 
-    private Key key;
+    private final Key key;
 
     public TokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -44,7 +42,7 @@ public class TokenProvider {
      * 검증된 사용자에 대해
      * 토큰 생성
      * */
-    public TokenDto generateTokenDTo(Authentication authentication){
+    public TokenDto generateTokenDto(Authentication authentication){
 
         //권한 가져오기
         String authorities = authentication.getAuthorities().stream()

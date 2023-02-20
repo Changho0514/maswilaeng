@@ -1,6 +1,5 @@
 package com.maswilaeng.dto.user.request;
 
-import com.maswilaeng.domain.entity.Role;
 import com.maswilaeng.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,10 +21,7 @@ public class UserRequestDto {
     private String userImage;
     private String introduction;
     private int withdrawYn;
-    private Role role;
     private String refreshToken;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
     private LocalDateTime withdrawAt;
 
     /* DTO -> Entity */
@@ -37,10 +33,6 @@ public class UserRequestDto {
                 .phoneNumber(phoneNumber)
                 .userImage(userImage)
                 .introduction(introduction)
-                .withdrawYn(withdrawYn)
-                .role(role.USER)
-                .refreshToken(refreshToken)
-                .createdAt(createdAt)
                 .build();
         return user;
     }

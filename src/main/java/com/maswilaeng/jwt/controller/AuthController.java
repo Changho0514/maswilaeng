@@ -2,7 +2,6 @@ package com.maswilaeng.jwt.controller;
 
 import com.maswilaeng.dto.user.request.LoginRequestDto;
 import com.maswilaeng.dto.user.request.UserJoinDto;
-import com.maswilaeng.dto.user.response.UserResponseDto;
 import com.maswilaeng.jwt.dto.TokenDto;
 import com.maswilaeng.jwt.dto.TokenRequestDto;
 import com.maswilaeng.jwt.service.AuthService;
@@ -20,8 +19,9 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signup(@RequestBody UserJoinDto userJoinDto) {
-        return ResponseEntity.ok(authService.signup(userJoinDto));
+    public ResponseEntity<Object> signup(@RequestBody UserJoinDto userJoinDto) throws Exception{
+        authService.signup(userJoinDto);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")

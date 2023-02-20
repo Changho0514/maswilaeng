@@ -1,8 +1,10 @@
 package com.maswilaeng.domain.entity;
 
 import com.maswilaeng.dto.post.request.PostUpdateDto;
-import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
@@ -10,9 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Builder
 @Table(name = "posts") // 이 부분을 참조하여 테이블이 생성된다.
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 외부에서의 생성을 열어 둘 필요가 없을 때 / 보안적으로 권장
 
 // Post : 실제 DB와 매칭될 클래스 (Entity Class)
@@ -29,21 +29,16 @@ public class Post extends BaseTimeEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(nullable = false)
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @Column
     private String thumbnail;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String content;
 
     @Column
@@ -59,15 +54,13 @@ public class Post extends BaseTimeEntity{
 
     // Java Build design pattern. 생성 시점에 값 채우기
     @Builder
-    public Post(Long post_id, LocalDateTime createdAt, String thumbnail, String title, String content, LocalDateTime modifiedAt) {
+    public Post(Long post_id, String thumbnail, String title, String content, User user) {
 
-        //
         this.id = post_id;
-        this.createdAt = createdAt;
         this.thumbnail = thumbnail;
         this.title = title;
+        this.user = user;
         this.content = content;
-        this.modifiedAt = modifiedAt;
     }
 }
 

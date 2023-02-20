@@ -4,7 +4,6 @@ import com.maswilaeng.domain.entity.User;
 import com.maswilaeng.domain.repository.UserRepository;
 import com.maswilaeng.dto.user.request.LoginRequestDto;
 import com.maswilaeng.dto.user.request.UserJoinDto;
-import com.maswilaeng.dto.user.response.UserResponseDto;
 import com.maswilaeng.jwt.TokenProvider;
 import com.maswilaeng.jwt.dto.TokenDto;
 import com.maswilaeng.jwt.dto.TokenRequestDto;
@@ -30,28 +29,29 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public UserResponseDto signup(UserJoinDto userJoinDto) {
+    public void signup(UserJoinDto userJoinDto) {
         if (userRepository.existsByEmail(userJoinDto.getEmail())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
         }
 
         User user = userJoinDto.toUser(passwordEncoder);
-        return UserResponseDto.of(userRepository.save(user));
+        userRepository.save(user);
     }
 
 
     @Transactional
     public TokenDto login(LoginRequestDto loginRequestDto) {
-        //1. Login ID/PW를 기반으로 AuthentificationToken 생성
+        //1. Login ID/PW를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = loginRequestDto.toAuthentication();
-
+        System.out.println("authenticationToken = " + authenticationToken);
         // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
         //      authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만든 loadUserByUsername이 실행됨
         Authentication authentication = authenticationManagerBuilder.getObject()
                 .authenticate(authenticationToken);
-
+        System.out.println("authentication = " + authentication);
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenDto tokenDto = tokenProvider.generateTokenDTo(authentication);
+        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+        System.out.println("tokenDto = " + tokenDto);
 
         // 4. RefreshToken 저장
         RefreshToken refreshToken = RefreshToken.builder()
@@ -59,6 +59,7 @@ public class AuthService {
                 .value(tokenDto.getRefreshToken())
                 .build();
 
+        System.out.println("refreshToken = " + refreshToken);
         refreshTokenRepository.save(refreshToken);
 
         // 5. 토큰 발급
@@ -85,7 +86,7 @@ public class AuthService {
         }
 
         //5. 새로운 토큰 생성
-        TokenDto tokenDto = tokenProvider.generateTokenDTo(authentication);
+        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
 
         //6. 저장소 정보 업데이트
         RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
