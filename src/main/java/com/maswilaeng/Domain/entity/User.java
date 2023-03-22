@@ -8,7 +8,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+<<<<<<< HEAD
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+=======
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+>>>>>>> e6e817d (before merge)
 @Getter
 @Entity
 @Table(name = "users")
