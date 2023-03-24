@@ -51,10 +51,10 @@ public class User extends BaseTimeEntity{
 
     private LocalDateTime withdrawAt;
 
-    @OneToMany(mappedBy = "fromUser")
+    @OneToMany(mappedBy = "toUser")
     private Set<Follow> followerList = new HashSet<>();
 
-    @OneToMany(mappedBy = "toUser")
+    @OneToMany(mappedBy = "fromUser")
     private Set<Follow> followingList = new HashSet<>();
 
     @OneToMany(mappedBy = "user")

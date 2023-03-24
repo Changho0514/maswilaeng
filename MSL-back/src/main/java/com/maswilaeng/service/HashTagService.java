@@ -74,17 +74,17 @@ public class HashTagService {
      */
     private Set<Tag> findOrCreateTag(Set<String> tagNameSet) {
         Set<Tag> tags = tagRepository.findByNameSet(tagNameSet);
-        for (String tagName : tagNameSet) {
-            if (!tags.contains(tagName)) {
-                Tag tag = Tag.builder()
-                        .tagName(tagName)
-                        .build();
-                tagRepository.save(tag);
-                tags.add(tag);
-            }
-        }
+
+        tagNameSet.stream()
+                .filter(tagName -> tags.stream()
+                        .noneMatch(tag -> tag.getTagName().equals(tagName)))
+                .map(tagName -> Tag.builder().tagName(tagName).build())
+                .peek(tagRepository::save)
+                .forEach(tags::add);
+
         return tags;
     }
+
 
     public List<PostListResponseDto> findPostByHashTag(String hashTagName) {
         List<Post> posts = hashTagRepository.findPostByHashTag(hashTagName);

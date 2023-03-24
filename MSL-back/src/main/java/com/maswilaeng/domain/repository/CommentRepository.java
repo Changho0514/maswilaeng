@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -43,4 +44,11 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Modifying
     @Query("UPDATE Comment c SET c.hateCount = c.hateCount - 1 WHERE c.id = :comment_Id")
     void subHateCount(@Param("comment_Id") Long commentId);
+
+    @Query("select c from Comment c where c.user.nickName =:content")
+    List<Comment> findByNickName(@Param("content") String content);
+
+    @Query("select c from Comment c where c.content like %:content%")
+    List<Comment> findByContent(@Param("content")String content);
+
 }

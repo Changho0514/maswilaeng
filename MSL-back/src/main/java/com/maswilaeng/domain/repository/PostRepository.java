@@ -10,14 +10,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findPostsByUserId(Long userId);
-
-    List<Post> findByTitleContaining(String keyword);
 
     Optional<Post> findById(Long Id);
 
@@ -38,4 +37,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Modifying
     @Query("UPDATE Post p SET p.hateCount = p.hateCount - 1 WHERE p.id = :postId")
     void subHateCount(@Param("postId") Long postId);
+
+    @Query("select p from Post p where p.user.nickName =:content")
+    List<Post> findByNickName(@Param("content") String content);
+
+    @Query("select p from Post p where p.title like %:content%")
+    List<Post> findByTitle(@Param("content") String content);
+
+    @Query("select p from Post p where p.title like %:content% or p.content like %:content%")
+    List<Post> findByTitleContent(@Param("content") String content);
 }

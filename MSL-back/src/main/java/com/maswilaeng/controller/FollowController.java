@@ -5,6 +5,7 @@ import com.maswilaeng.domain.entity.User;
 import com.maswilaeng.domain.repository.UserRepository;
 import com.maswilaeng.dto.common.ResponseDto;
 import com.maswilaeng.dto.follow.request.FollowRequestDto;
+import com.maswilaeng.dto.follow.response.FollowResponseDto;
 import com.maswilaeng.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.connector.Response;
@@ -29,8 +30,8 @@ public class FollowController {
      */
     @PostMapping
     public ResponseEntity<?> follow(@RequestBody FollowRequestDto followRequestDto) throws Exception {
-        followService.createFollow(followRequestDto.getToUserId(), followRequestDto.getFromUserId());
-        return ResponseEntity.ok().body(ResponseDto.of(HttpStatus.OK));
+        FollowResponseDto follow = followService.createFollow(followRequestDto.getToUserId(), followRequestDto.getFromUserId());
+        return ResponseEntity.ok(follow);
     }
 
 

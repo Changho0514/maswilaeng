@@ -5,6 +5,7 @@ import com.maswilaeng.domain.entity.User;
 import com.maswilaeng.domain.repository.FollowRepository;
 import com.maswilaeng.domain.repository.UserRepository;
 import com.maswilaeng.dto.follow.response.FollowingListResponseDto;
+import com.maswilaeng.dto.follow.response.FollowResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class FollowService {
     private final UserRepository userRepository;
 
     /** 팔로우 기능 */
-    public void createFollow(Long toUserId, Long fromUserId) throws Exception {
+    public FollowResponseDto createFollow(Long toUserId, Long fromUserId) throws Exception {
 
 //        팔로우하고 있는지 확인 (팔로우 리스트 조인해서)
         if (!isFollowing(toUserId, fromUserId)) {
@@ -38,6 +39,8 @@ public class FollowService {
         else{
             throw new Exception("이미 팔로우를 눌렀습니다");
         }
+        int followerCount = userRepository.findById(toUserId).get().getFollowerList().size();
+        return new FollowResponseDto(toUserId, fromUserId, followerCount);
     }
 
 
